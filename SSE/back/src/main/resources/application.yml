@@ -1,0 +1,13 @@
+
+spring:
+  application:
+    name: SSE
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+server:
+  port: 8005

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ol": "^7.3.0"
+    "ol": "^7.3.0",
+    "proj4": "^2.9.0"
   }
 }
