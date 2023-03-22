@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: NettyDemo
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+server:
+  port: 8765
+
+
+thread-pool:
+  core_pool_size: 5
+  max_pool_size: 5
+  queue_capacity: 99999
+  prefix: t-pool-
