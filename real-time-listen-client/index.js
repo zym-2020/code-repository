@@ -32,6 +32,7 @@ const dateFormat = (date, format) => {
 
 const execute = (host, port) => {
   let flag = false;
+  let client;
   function conn(h, p) {
     const client = net.createConnection({
       host: h,
@@ -54,8 +55,8 @@ const execute = (host, port) => {
     return client;
   }
 
+  client = conn(host, port);
   schedule.scheduleJob("0 15 * * * *", () => {
-    let client;
     if (!flag) {
       client = conn(host, port);
     }
