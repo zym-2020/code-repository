@@ -1,39 +1,6 @@
 const net = require("net");
 const schedule = require("node-schedule");
 
-const client = net.createConnection({
-  host: "172.21.213.244",
-  port: 8764,
-});
-
-client.on("connect", () => {
-  // 向服务器发送数据
-  console.log('连接!')
-  sendData();
-});
-
-const sendData = () => {
-  schedule.scheduleJob("0 15 * * * *", () => {
-    const time = dateFormat(new Date(), "yyyy-MM-dd hh:mm");
-    client.write(
-      Math.random().toFixed(3) + "\t" + Math.random().toFixed(3)
-    );
-    console.log(time + "发送数据");
-  });
-};
-
-// client.on("data", (buffer) => {
-//   console.log(buffer.toString());
-// });
-
-client.on("error", (err) => {
-  console.error("服务器异常：", err);
-});
-
-client.on("close", (err) => {
-  console.log("客户端链接断开！", err);
-});
-
 const dateFormat = (date, format) => {
   let dateObj = date;
   let fmt = format || "yyyy-MM-dd hh:mm:ss";
@@ -62,3 +29,43 @@ const dateFormat = (date, format) => {
       );
   return fmt;
 };
+
+const execute = (host, port) => {
+  let flag = false;
+  function conn(h, p) {
+    const client = net.createConnection({
+      host: h,
+      port: p,
+    });
+
+    client.on("connect", () => {
+      console.log("连接!");
+      flag = true;
+    });
+
+    client.on("error", (err) => {
+      console.error("服务器异常：", err);
+    });
+
+    client.on("close", (err) => {
+      console.log("客户端链接断开！", err);
+      flag = false;
+    });
+    return client;
+  }
+
+  schedule.scheduleJob("0 15 * * * *", () => {
+    let client;
+    if (!flag) {
+      client = conn(host, port);
+    }
+    const time = dateFormat(new Date(), "yyyy-MM-dd hh:mm");
+    client.write(Math.random().toFixed(3) + "\t" + Math.random().toFixed(3));
+    console.log(time + "发送数据");
+  });
+};
+
+const param = process.argv;
+const host = param[2];
+const port = param[3];
+execute(host, port);
