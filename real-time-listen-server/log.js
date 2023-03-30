@@ -1,5 +1,5 @@
 const log4js = require("log4js")
-const logPath = "D:/zhuomian/real-time/log/"
+const logPath = "E:/real-time/log/"
 
 log4js.configure({
   appenders: {
