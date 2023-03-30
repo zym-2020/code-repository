@@ -22,7 +22,7 @@ public class SSEController {
     @CrossOrigin
     @RequestMapping(value = "/subscribe/{id}", method = RequestMethod.GET)
     public SseEmitter subscribe(@PathVariable String id) throws IOException {
-        SseEmitter sseEmitter = new SseEmitter(1000 * 60 * 60L);
+        SseEmitter sseEmitter = new SseEmitter(1000 * 3L);
         sseEmitter.send(SseEmitter.event().name("msg").data("连接成功"));
         sseCache.put(id, sseEmitter);
         sseEmitter.onTimeout(() -> {

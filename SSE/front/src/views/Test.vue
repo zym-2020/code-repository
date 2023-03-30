@@ -16,7 +16,7 @@ export default defineComponent({
 
       source.addEventListener("msg", (e) => {
         console.log(e);
-        msgs.value.push(e.data);
+        msgs.value.push((e as MessageEvent).data);
       });
 
       source.onopen = (e) => {
@@ -27,7 +27,7 @@ export default defineComponent({
       source.onerror = (e) => {
         console.log(e);
         msgs.value.push("连接关闭");
-        source.close()
+        
       };
 
       
