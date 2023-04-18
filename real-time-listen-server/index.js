@@ -58,7 +58,7 @@ const execute = () => {
       writeFile(
         dateFormat(new Date(), "yyyy-MM-dd hh:mm") +
           "\t" +
-          buffer.toString() +
+          buffer.toString('hex') +
           "\n",
         path
       );
