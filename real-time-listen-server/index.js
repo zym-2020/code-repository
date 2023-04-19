@@ -57,9 +57,9 @@ const execute = () => {
       logger.info("接收一次数据");
       writeFile(
         dateFormat(new Date(), "yyyy-MM-dd hh:mm") +
-          "\t" +
-          buffer.toString('hex') +
-          "\n",
+          "\n" +
+          buffer.toString("hex") +
+          "\n\n",
         path
       );
     });
