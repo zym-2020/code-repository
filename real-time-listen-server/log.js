@@ -1,5 +1,13 @@
-const log4js = require("log4js")
-const logPath = "E:/real-time/log/"
+const log4js = require("log4js");
+const fs = require("fs");
+// const logPath = "E:/real-time/log/";
+
+const readLogPath = () => {
+  const data = fs.readFileSync("config.json", "utf-8");
+  return JSON.parse(data)["log"];
+};
+
+const logPath = readLogPath();
 
 log4js.configure({
   appenders: {
@@ -13,4 +21,4 @@ log4js.configure({
 });
 
 const logger = log4js.getLogger("realTime");
-module.exports = logger
+module.exports = logger;
