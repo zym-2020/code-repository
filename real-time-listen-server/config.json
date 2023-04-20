@@ -2,5 +2,6 @@
     "host": "172.21.213.244",
     "port": 6666,
     "path": "D:/zhuomian/real-time/data",
-    "log": "D:/zhuomian/real-time/log/"
+    "log": "D:/zhuomian/real-time/log/",
+    "dbPath": "D:/zhuomian/毕业/node-manage/monitoring.db"
 }

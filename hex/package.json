@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "net": "^1.0.2"
+    "iconv-lite": "^0.6.3",
+    "net": "^1.0.2",
+    "node-uuid": "^1.4.8",
+    "sqlite3": "^5.1.6"
   }
 }

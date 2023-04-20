@@ -2,6 +2,8 @@ const net = require("net");
 const fs = require("fs");
 const writeFile = require("./writeFile");
 const logger = require("./log");
+const sqlite = require("sqlite3").verbose();
+const uuid = require("node-uuid");
 
 const dateFormat = (date, format) => {
   let dateObj = date;
@@ -42,6 +44,7 @@ const execute = () => {
   const host = config.host;
   const port = config.port;
   const path = config.path;
+  const dbPath = config.dbPath;
 
   const server = net.createServer();
   server.listen(port, host);
@@ -62,6 +65,21 @@ const execute = () => {
           "\n\n",
         path
       );
+
+      const id = uuid.v1();
+      const time = dateFormat(new Date(), "yyyy-MM-dd hh:mm");
+      const db = new sqlite.Database(dbPath, (err) => {
+        if (err) throw err;
+      });
+      db.run(
+        `insert into device_a values('${id}', '${time}', X'${buffer.toString(
+          "hex"
+        )}')`,
+        (err) => {
+          if (err) throw err;
+        }
+      );
+      db.close();
     });
     socket.on("error", (err) => {
       logger.info("socket错误,可能是客户端关闭导致", err);
