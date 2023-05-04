@@ -58,16 +58,16 @@ const execute = () => {
     // data 事件就是读取数据
     socket.on("data", (buffer) => {
       logger.info("接收一次数据");
-      writeFile(
-        dateFormat(new Date(), "yyyy-MM-dd hh:mm") +
-          "\n" +
-          buffer.toString("hex") +
-          "\n\n",
-        path
-      );
+      // writeFile(
+      //   dateFormat(new Date(), "yyyy-MM-dd hh:mm") +
+      //     "\n" +
+      //     buffer.toString("hex") +
+      //     "\n\n",
+      //   path
+      // );
 
       const id = uuid.v1();
-      const time = dateFormat(new Date(), "yyyy-MM-dd hh:mm");
+      const time = dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss");
       const db = new sqlite.Database(dbPath, (err) => {
         if (err) throw err;
       });
