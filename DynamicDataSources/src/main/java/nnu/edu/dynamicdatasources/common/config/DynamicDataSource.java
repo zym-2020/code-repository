@@ -1,6 +1,7 @@
 package nnu.edu.dynamicdatasources.common.config;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @Date: 2023/05/04/23:06
  * @Description:
  */
+
 public class DynamicDataSource extends AbstractRoutingDataSource {
     private Map<Object, Object> dataSources = new HashMap<>();
     /**

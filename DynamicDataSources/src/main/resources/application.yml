@@ -5,12 +5,13 @@ spring:
     active: dev
   datasource:
     driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:D:/zhuomian/test.db
+    jdbc-url: jdbc:sqlite:D:/zhuomian/test.db
   servlet:
     multipart:
       enabled: true
       max-file-size: 50MB
       max-request-size: 50MB
+
 server:
   port: 8900
 
