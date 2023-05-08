@@ -4,8 +4,12 @@ spring:
   profiles:
     active: dev
   datasource:
-    driver-class-name: org.sqlite.JDBC
-    jdbc-url: jdbc:sqlite:D:/zhuomian/test.db
+#    driver-class-name: org.sqlite.JDBC
+#    jdbc-url: jdbc:sqlite:D:/zhuomian/test.db
+    jdbc-url: jdbc:postgresql://localhost:5432/manage?stringtype=unspecified
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
   servlet:
     multipart:
       enabled: true

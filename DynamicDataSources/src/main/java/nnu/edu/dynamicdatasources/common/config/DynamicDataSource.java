@@ -16,7 +16,7 @@ import java.util.Map;
  */
 
 public class DynamicDataSource extends AbstractRoutingDataSource {
-    private static Map<Object, Object> dataSources = new HashMap<>();
+    private Map<Object, Object> dataSources = new HashMap<>();
     /**
      * 获取当前数据源的键
      */
@@ -49,7 +49,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      * @param dataSources
      */
     public void setDataSources(Map<Object, Object> dataSources) {
-        DynamicDataSource.dataSources = dataSources;
+        this.dataSources = dataSources;
         super.setTargetDataSources(dataSources);
         // 保存数据源的key
         DataSourceContextHolder.addDataSourceKeys(dataSources.keySet());
@@ -62,7 +62,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      * @param dataSource
      */
     public void addDataSource(String key, DataSource dataSource) {
-        DynamicDataSource.dataSources.put(key, dataSource);
+        this.dataSources.put(key, dataSource);
         super.setTargetDataSources(dataSources);
         // 保存数据源的key
         DataSourceContextHolder.addDataSourceKey(key);
