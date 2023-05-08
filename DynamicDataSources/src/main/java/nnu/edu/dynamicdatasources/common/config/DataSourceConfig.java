@@ -47,11 +47,11 @@ public class DataSourceConfig {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put("default", defaultSource());
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url("jdbc:sqlite:D:/zhuomian/test1.db");
-        dataSourceBuilder.driverClassName(JDBC.class.getName());
-        DataSource source = dataSourceBuilder.build();
-        dataSourceMap.put("123", source);
+//        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+//        dataSourceBuilder.url("jdbc:sqlite:D:/zhuomian/test1.db");
+//        dataSourceBuilder.driverClassName(JDBC.class.getName());
+//        DataSource source = dataSourceBuilder.build();
+//        dataSourceMap.put("123", source);
         // 默认数据源
         dynamicDataSource.setDefaultDataSource(defaultSource());
         // 动态数据源
