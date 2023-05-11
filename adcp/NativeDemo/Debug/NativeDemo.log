@@ -1,0 +1,2 @@
+﻿  NativeDemo.c
+E:\codes\code-repository\adcp\NativeDemo\NativeDemo.c(3,10): fatal error C1853: “Debug\NativeDemo.pch”预编译头文件来自编译器的其他版本，或者预编译头为 C++ 而在 C 中使用它(或相反)

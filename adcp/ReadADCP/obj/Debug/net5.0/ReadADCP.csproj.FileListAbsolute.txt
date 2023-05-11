@@ -1,0 +1,16 @@
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ReadADCP.exe
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ReadADCP.deps.json
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ReadADCP.runtimeconfig.json
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ReadADCP.runtimeconfig.dev.json
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ReadADCP.dll
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ref\ReadADCP.dll
+E:\codes\code-repository\adcp\ReadADCP\bin\Debug\net5.0\ReadADCP.pdb
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.csproj.AssemblyReference.cache
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.GeneratedMSBuildEditorConfig.editorconfig
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.AssemblyInfoInputs.cache
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.AssemblyInfo.cs
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.csproj.CoreCompileInputs.cache
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.dll
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ref\ReadADCP.dll
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.pdb
+E:\codes\code-repository\adcp\ReadADCP\obj\Debug\net5.0\ReadADCP.genruntimeconfig.cache
