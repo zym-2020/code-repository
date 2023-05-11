@@ -1,4 +1,4 @@
-# TCP协议服务端
+# java Native接口调C的demo
 
-node版，对应客户端real-time-listen-client
-相比于netty，功能上弱很多
+本来是想调c的PDDecoder的开源库来解析adcp数据
+然后发现了dolyfn这个开源库
