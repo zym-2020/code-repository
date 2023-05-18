@@ -160,8 +160,25 @@ const heapSort = (arr) => {
 
 /**
  * 希尔排序
+ * 算法时间取决于gap，如何选择gap现在有些比较好的选择了，但不确定是否是最好的,
+ * 此处gap选取5
  */
-const shellSort = () => {};
+const shellSort = (arr) => {
+  let gap = 5;
+  while (gap >= 1) {
+    for (let i = 0; i < gap; i++) {
+      for (let j = i + 0; j < arr.length; j = j + i + 1) {
+        let count = j;
+        while (count > i + 0 && arr[count - 1 - i] > arr[count]) {
+          const temp = arr[count - 1 - i];
+          arr[count - 1 - i] = arr[count];
+          arr[count] = temp;
+        }
+      }
+    }
+    gap = Math.floor(gap / 2);
+  }
+};
 
 /**
  * 计数排序
@@ -223,7 +240,7 @@ const radixSorter = (arr, radix) => {
         const t = res[count];
         res[count] = res[count - 1];
         res[count - 1] = t;
-        count--
+        count--;
       }
     }
     let count = 0;
@@ -236,5 +253,5 @@ const radixSorter = (arr, radix) => {
   }
 };
 const arr = [3, 2, 38, 5, 47, 15, 36, 26, 27, 44, 46, 4, 19, 50, 48];
-radixSorter(arr, 2);
+shellSort(arr);
 console.log(arr);
