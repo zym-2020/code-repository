@@ -121,7 +121,7 @@
       webgl.blendFunc(webgl.SRC_ALPHA, webgl.ONE_MINUS_SRC_ALPHA);
       const texture = webgl.createTexture();
       texture.image = new Image();
-      texture.image.src = "SpiderMan.png";
+      texture.image.src = "point64.png";
       texture.image.onload = () => {
         webgl.activeTexture(webgl.TEXTURE0);
         webgl.bindTexture(webgl.TEXTURE_2D, texture);
