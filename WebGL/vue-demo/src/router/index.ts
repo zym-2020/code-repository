@@ -21,6 +21,15 @@ const routes: Array<RouteRecordRaw> = [
     name: "webgl",
     component: () => import("@/views/CanvasView.vue"),
   },
+  {
+    path: "/camera",
+    name: "camera",
+    component: () => import("@/views/CameraView.vue"),
+  },
+  {
+    path: "/cube",
+    component: () => import("@/views/CubeView.vue"),
+  },
 ];
 
 const router = createRouter({

@@ -67,9 +67,7 @@ export default defineComponent({
 
     const initData = async () => {
       const points = [
-        -0.5, 0.5, 0, 1, 0, 0,
-         0.5, 0.5, 0, 1, 1, 0, 
-         0.5, -0.5, 0, 1, 1, 1,
+        -0.5, 0.5, 0, 1, 0, 0, 0.5, 0.5, 0, 1, 1, 0, 0.5, -0.5, 0, 1, 1, 1,
         -0.5, -0.5, 0, 1, 0, 1,
       ];
       const position = new Float32Array(points);
@@ -118,7 +116,7 @@ export default defineComponent({
           rej(null);
         };
       });
-    //   webgl.pixelStorei(webgl.UNPACK_FLIP_Y_WEBGL, true);
+      //   webgl.pixelStorei(webgl.UNPACK_FLIP_Y_WEBGL, true);
       webgl.bindTexture(webgl.TEXTURE_2D, texture);
       webgl.texImage2D(
         webgl.TEXTURE_2D,
