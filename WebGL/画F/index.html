@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>画F</title>
+    <script src="./glMatrix-0.9.6.min.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="webglCanvas" height="500" width="500"></canvas>
+  </body>
+  <script>
+    let webgl;
+    let projMat4;
+    let program;
+    const initWebGL = () => {
+      const canvas = document.getElementById("webglCanvas");
+      webgl = canvas.getContext("webgl");
+      webgl.viewport(0, 0, canvas.clientWidth, canvas.clientHeight);
+      projMat4 = mat4.ortho(
+        0,
+        canvas.clientWidth,
+        canvas.clientHeight,
+        0,
+        -1.0,
+        1.0
+      );
+    };
+
+    const initShader = () => {
+      const vertexScript = `
+        attribute vec4 a_position;
+        uniform mat4 proj;
+        void main() {
+            gl_Position = proj * a_position;
+        }
+        `;
+      const fragmentScript = `
+        void main() {
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+        `;
+      const vertexShader = webgl.createShader(webgl.VERTEX_SHADER);
+      const fragmentShader = webgl.createShader(webgl.FRAGMENT_SHADER);
+      webgl.shaderSource(vertexShader, vertexScript);
+      webgl.shaderSource(fragmentShader, fragmentScript);
+      webgl.compileShader(vertexShader);
+      webgl.compileShader(fragmentShader);
+      if (!webgl.getShaderParameter(vertexShader, webgl.COMPILE_STATUS)) {
+        const err = webgl.getShaderInfoLog(vertexShader);
+        alert(err);
+        return;
+      }
+      if (!webgl.getShaderParameter(fragmentShader, webgl.COMPILE_STATUS)) {
+        const err = webgl.getShaderInfoLog(fragmentShader);
+        alert(err);
+        return;
+      }
+      program = webgl.createProgram();
+      webgl.attachShader(program, vertexShader);
+      webgl.attachShader(program, fragmentShader);
+      webgl.linkProgram(program);
+      webgl.useProgram(program);
+    };
+
+    const initData = () => {
+      const points = [
+        100.0, 100.0, 200.0, 100.0, 200.0, 130.0, 100.0, 130.0, 130.0, 130.0,
+        100.0, 240.0, 130.0, 240.0, 130.0, 190.0, 200.0, 190.0, 200.0, 160.0,
+        130.0, 160.0,
+      ];
+      const position = new Float32Array(points);
+
+      const positionBuffer = webgl.createBuffer();
+      webgl.bindBuffer(webgl.ARRAY_BUFFER, positionBuffer);
+      webgl.bufferData(webgl.ARRAY_BUFFER, position, webgl.STATIC_DRAW);
+      const aPsotion = webgl.getAttribLocation(program, "a_position");
+      webgl.enableVertexAttribArray(aPsotion);
+      webgl.vertexAttribPointer(aPsotion, 2, webgl.FLOAT, false, 2 * 4, 0);
+      const uniformProj = webgl.getUniformLocation(program, "proj");
+      webgl.uniformMatrix4fv(uniformProj, false, projMat4);
+
+      const index = new Uint16Array([
+        0, 1, 2, 0, 2, 3, 3, 4, 5, 4, 5, 6, 7, 8, 10, 8, 9, 10,
+      ]);
+
+      const indexBuffer = webgl.createBuffer();
+      webgl.bindBuffer(webgl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+      webgl.bufferData(webgl.ELEMENT_ARRAY_BUFFER, index, webgl.STATIC_DRAW);
+    };
+
+    const draw = () => {
+      webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+      webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
+      webgl.drawElements(webgl.TRIANGLES, 18, webgl.UNSIGNED_SHORT, 0);
+    };
+
+    window.onload = () => {
+      initWebGL();
+      initShader();
+      initData();
+      draw();
+    };
+  </script>
+</html>
