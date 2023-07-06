@@ -1,7 +1,7 @@
-import { CustomLayerInterface, MercatorCoordinate } from "mapbox-gl";
 import { mat4 } from "gl-matrix";
+import { CustomLayerInterface, MercatorCoordinate } from "mapbox-gl";
 
-export class CustomLayer {
+export class TempCustomLayer {
   id: string;
   type: "custom";
   vertexScript: string;
@@ -55,117 +55,40 @@ export class CustomLayer {
   }
 
   prerender(gl: WebGL2RenderingContext, matrix: number[]) {
+    const helsinki = MercatorCoordinate.fromLngLat({
+      lng: 121.194953,
+      lat: 31.786604,
+    });
+
     // const VAO = gl.createVertexArray();
     // gl.bindVertexArray(VAO);
-
     const VBO = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
     gl.bufferData(
       gl.ARRAY_BUFFER,
-      7 * 4 * this.rotationArray.length,
+      new Float32Array([helsinki.x, helsinki.y]),
       gl.STATIC_DRAW
     );
-    gl.bufferSubData(
-      gl.ARRAY_BUFFER,
-      0,
-      new Float32Array(this.sampleInfoArray)
-    );
-    gl.bufferSubData(
-      gl.ARRAY_BUFFER,
-      4 * 4 * this.rotationArray.length,
-      new Float32Array(this.positionArray)
-    );
-    gl.bufferSubData(
-      gl.ARRAY_BUFFER,
-      6 * 4 * this.rotationArray.length,
-      new Float32Array(this.rotationArray)
-    );
-
-    const symbolPixel = 25.0;
-    const modelMatrix = mat4.create();
-    mat4.identity(modelMatrix);
-    mat4.scale(modelMatrix, modelMatrix, [
-      symbolPixel * window.devicePixelRatio,
-      symbolPixel * window.devicePixelRatio,
-      1.0,
-    ]);
-    const frameBuffer = [gl.canvas.width, gl.canvas.height];
 
     if (this.customProgram) {
       gl.useProgram(this.customProgram);
-
       gl.enableVertexAttribArray(0);
-      gl.vertexAttribPointer(0, 4, gl.FLOAT, false, 4 * 4, 0);
-      gl.vertexAttribDivisor(0, 1);
-
-      gl.enableVertexAttribArray(1);
-      gl.vertexAttribPointer(
-        1,
-        2,
-        gl.FLOAT,
-        false,
-        4 * 2,
-        4 * 4 * this.rotationArray.length
-      );
-      gl.vertexAttribDivisor(1, 1);
-
-      gl.enableVertexAttribArray(2);
-      gl.vertexAttribPointer(
-        2,
-        1,
-        gl.FLOAT,
-        false,
-        4,
-        4 * 6 * this.rotationArray.length
-      );
-      gl.vertexAttribDivisor(2, 1);
-      gl.bindBuffer(gl.ARRAY_BUFFER, null);
-      gl.bindVertexArray(null);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 4 * 2, 0);
 
       const uMatrix = gl.getUniformLocation(this.customProgram, "u_matrix");
       gl.uniformMatrix4fv(uMatrix, false, matrix);
-
-      const uSymbolMatrix = gl.getUniformLocation(
-        this.customProgram,
-        "u_symbolMatrix"
-      );
-      gl.uniformMatrix4fv(uSymbolMatrix, false, modelMatrix);
-
-      const uBufferSize = gl.getUniformLocation(
-        this.customProgram,
-        "u_bufferSize"
-      );
-      gl.uniform2f(uBufferSize, frameBuffer[0], frameBuffer[1]);
-
-      console.log(this.symbolImage);
-
-      loadTexture(this.symbolImage, 0, gl);
-      loadTexture(this.paletteImage, 1, gl);
-      const uniformSymbolTexture = gl.getUniformLocation(
-        this.customProgram,
-        "symbolTexture"
-      );
-      const uniformPaletteTexture = gl.getUniformLocation(
-        this.customProgram,
-        "paletteTexture"
-      );
-      gl.uniform1i(uniformSymbolTexture, 0);
-      gl.uniform1i(uniformPaletteTexture, 1);
     }
+
+    // gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    // gl.bindVertexArray(null);
   }
   render(gl: WebGL2RenderingContext, matrix: number[]) {
+    console.log(gl);
     if (this.customProgram) {
       gl.useProgram(this.customProgram);
-      //   gl.enable(gl.BLEND);
-      //   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      //   gl.drawArrays(gl.POINTS, 0, 2000);
-      gl.drawArraysInstanced(
-        gl.TRIANGLE_STRIP,
-        0,
-        64,
-        this.rotationArray.length
-      );
-      //   gl.drawArraysInstanced(gl.POINTS, 0, 1, this.rotationArray.length);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.drawArrays(gl.POINTS, 0, 1);
     }
   }
 }
@@ -182,6 +105,6 @@ const loadTexture = (
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-  //   gl.bindTexture(gl.TEXTURE_2D, null);
+  gl.bindTexture(gl.TEXTURE_2D, null);
   return texture;
 };
