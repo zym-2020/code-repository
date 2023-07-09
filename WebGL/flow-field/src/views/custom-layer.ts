@@ -12,6 +12,12 @@ export class CustomLayer {
   rotationArray: number[];
   symbolImage: HTMLImageElement;
   paletteImage: HTMLImageElement;
+  symbolTexture: WebGLTexture = 0;
+  paletteTexture: WebGLTexture = 0;
+  VAO: WebGLVertexArrayObject | null = null;
+  VBO: WebGLBuffer | null = null;
+  modelMatrix: mat4 = mat4.create();
+  frameBuffer: number[] = [];
 
   constructor(
     id: string,
@@ -52,14 +58,14 @@ export class CustomLayer {
     gl.attachShader(this.customProgram!, vertexShader!);
     gl.attachShader(this.customProgram!, fragmentShader!);
     gl.linkProgram(this.customProgram!);
-  }
 
-  prerender(gl: WebGL2RenderingContext, matrix: number[]) {
-    // const VAO = gl.createVertexArray();
-    // gl.bindVertexArray(VAO);
+    this.symbolTexture = loadTexture(this.symbolImage, 0, gl)!;
+    this.paletteTexture = loadTexture(this.paletteImage, 1, gl)!;
 
-    const VBO = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
+    this.VAO = gl.createVertexArray();
+    gl.bindVertexArray(this.VAO);
+    this.VBO = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.VBO);
     gl.bufferData(
       gl.ARRAY_BUFFER,
       7 * 4 * this.rotationArray.length,
@@ -82,14 +88,13 @@ export class CustomLayer {
     );
 
     const symbolPixel = 25.0;
-    const modelMatrix = mat4.create();
-    mat4.identity(modelMatrix);
-    mat4.scale(modelMatrix, modelMatrix, [
+    mat4.identity(this.modelMatrix);
+    mat4.scale(this.modelMatrix, this.modelMatrix, [
       symbolPixel * window.devicePixelRatio,
       symbolPixel * window.devicePixelRatio,
       1.0,
     ]);
-    const frameBuffer = [gl.canvas.width, gl.canvas.height];
+    this.frameBuffer.push(gl.canvas.width, gl.canvas.height);
 
     if (this.customProgram) {
       gl.useProgram(this.customProgram);
@@ -119,9 +124,21 @@ export class CustomLayer {
         4 * 6 * this.rotationArray.length
       );
       gl.vertexAttribDivisor(2, 1);
-      gl.bindBuffer(gl.ARRAY_BUFFER, null);
-      gl.bindVertexArray(null);
+    }
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    gl.bindVertexArray(null);
+  }
 
+  prerender(gl: WebGL2RenderingContext, matrix: number[]) {}
+  render(gl: WebGL2RenderingContext, matrix: number[]) {
+    if (this.customProgram) {
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.symbolTexture);
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, this.paletteTexture);
+      gl.bindVertexArray(this.VAO);
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.VBO);
+      gl.useProgram(this.customProgram);
       const uMatrix = gl.getUniformLocation(this.customProgram, "u_matrix");
       gl.uniformMatrix4fv(uMatrix, false, matrix);
 
@@ -129,18 +146,14 @@ export class CustomLayer {
         this.customProgram,
         "u_symbolMatrix"
       );
-      gl.uniformMatrix4fv(uSymbolMatrix, false, modelMatrix);
+      gl.uniformMatrix4fv(uSymbolMatrix, false, this.modelMatrix);
 
       const uBufferSize = gl.getUniformLocation(
         this.customProgram,
         "u_bufferSize"
       );
-      gl.uniform2f(uBufferSize, frameBuffer[0], frameBuffer[1]);
+      gl.uniform2f(uBufferSize, this.frameBuffer[0], this.frameBuffer[1]);
 
-      console.log(this.symbolImage);
-
-      loadTexture(this.symbolImage, 0, gl);
-      loadTexture(this.paletteImage, 1, gl);
       const uniformSymbolTexture = gl.getUniformLocation(
         this.customProgram,
         "symbolTexture"
@@ -151,21 +164,16 @@ export class CustomLayer {
       );
       gl.uniform1i(uniformSymbolTexture, 0);
       gl.uniform1i(uniformPaletteTexture, 1);
-    }
-  }
-  render(gl: WebGL2RenderingContext, matrix: number[]) {
-    if (this.customProgram) {
-      gl.useProgram(this.customProgram);
-      //   gl.enable(gl.BLEND);
-      //   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      //   gl.drawArrays(gl.POINTS, 0, 2000);
+
       gl.drawArraysInstanced(
         gl.TRIANGLE_STRIP,
         0,
         64,
         this.rotationArray.length
       );
-      //   gl.drawArraysInstanced(gl.POINTS, 0, 1, this.rotationArray.length);
+      gl.bindBuffer(gl.ARRAY_BUFFER, null);
+      gl.bindVertexArray(null);
+      gl.bindTexture(gl.TEXTURE_2D, null);
     }
   }
 }
@@ -178,10 +186,11 @@ const loadTexture = (
   const texture = gl.createTexture();
   gl.activeTexture(gl.TEXTURE0 + index);
   gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-  //   gl.bindTexture(gl.TEXTURE_2D, null);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.bindTexture(gl.TEXTURE_2D, null);
   return texture;
 };
