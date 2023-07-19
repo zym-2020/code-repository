@@ -7,13 +7,15 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/gl-matrix": "^3.2.0",
     "@types/mapbox-gl": "^2.7.11",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
+    "gl-matrix": "^3.4.3",
     "mapbox-gl": "^2.15.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0",
-    "worker-loader": "^3.0.8"
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

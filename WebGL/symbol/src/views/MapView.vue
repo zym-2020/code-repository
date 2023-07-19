@@ -48,16 +48,16 @@ export default defineComponent({
         //     },
         //   },
         //   layers: [
-        //     // {
-        //     //   id: "tdtVec",
-        //     //   type: "raster",
-        //     //   source: "tdtVec",
-        //     // },
-        //     // {
-        //     //   id: "txt",
-        //     //   type: "raster",
-        //     //   source: "txt",
-        //     // },
+        //     {
+        //       id: "tdtVec",
+        //       type: "raster",
+        //       source: "tdtVec",
+        //     },
+        //     {
+        //       id: "txt",
+        //       type: "raster",
+        //       source: "txt",
+        //     },
         //   ],
         // },
         center: [118.785067, 32.059148],
