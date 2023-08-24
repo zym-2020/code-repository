@@ -1,6 +1,7 @@
 <template>
   <div class="home">首页</div>
   <button @click="clickHandle">按钮</button>
+  <!-- <img src="/image/projection.png" alt=""> -->
 </template>
 
 <script lang="ts">

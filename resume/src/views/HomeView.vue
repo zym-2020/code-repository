@@ -1,6 +1,7 @@
 <template>
   <div class="body">
     <div class="name">张益铭</div>
+    <div style="text-align: center;">求职意向：前端工程师</div>
     <el-divider content-position="left"
       ><span class="divider-text">个人信息</span></el-divider
     >
@@ -133,7 +134,7 @@
         <li>第九届“共享杯”科技资源共享服务创新大赛——优秀奖</li>
         <li>第十届“共享杯”科技资源共享服务创新大赛——优秀奖</li>
         <li>软件著作——《长江南京以下航道泛在信息集成系统》</li>
-        <li>《Computers and Geosciences》上发表论文《A Geometry-Based Method for Visualizing Time-varying Flow Fields on Map Platforms Using Texture Polymorphism》（三作）</li>
+        <!-- <li>《Computers and Geosciences》上发表论文《A Geometry-Based Method for Visualizing Time-varying Flow Fields on Map Platforms Using Texture Polymorphism》（三作）</li> -->
       </ul>
     </div>
   </div>
@@ -148,9 +149,9 @@ export default defineComponent({});
 <style lang="scss" scoped>
 .body {
   width: 800px;
-  // height: calc(100% - 100px);
+  
   margin: 20px auto;
-  padding: 30px 20px 15px;
+  padding: 30px 20px;
   border: solid 2px #d4d4d4;
   .el-divider {
     margin-bottom: 15px;

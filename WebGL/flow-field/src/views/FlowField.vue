@@ -8,10 +8,15 @@
 import { defineComponent, onMounted } from "vue";
 import mapBoxGl, { MercatorCoordinate, MapboxOptions } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import ComputeWorker from "worker-loader!@/worker/compute-worker.ts";
+import { loadShader } from "@/api/request";
+// import ComputeWorker from "worker-loader!@/worker/compute-worker.ts";
 export default defineComponent({
   setup() {
     let map: mapBoxGl.Map;
+    let vertexScript: string;
+    let fragmentScript: string;
+    let projectionImage: HTMLImageElement;
+    let positionImage: HTMLImageElement;
     const initMap = () => {
       const mapOpt: MapboxOptions & { useWebGL2: boolean } = {
         container: "container",
@@ -25,14 +30,42 @@ export default defineComponent({
       map = new mapBoxGl.Map(mapOpt);
     };
 
-    onMounted(() => {
-      const worker: Worker = new ComputeWorker();
-      worker.postMessage("开启线程");
-      worker.onmessage = (e) => {
-        console.log(e);
-        worker.terminate();
-      };
-      
+    const initData = async (
+      vertAddress: string,
+      fragAddress: string,
+      projectionImageAddress: string,
+      positionImageAddress: string
+    ) => {
+      vertexScript = await loadShader(vertAddress);
+      fragmentScript = await loadShader(fragAddress);
+      projectionImage.src = projectionImageAddress;
+      positionImage.src = positionImageAddress;
+      await new Promise((res) => {
+        projectionImage.onload = () => {
+          res(null);
+        };
+      });
+      await new Promise((res) => {
+        positionImage.onload = () => {
+          res(null);
+        };
+      });
+    };
+
+    onMounted(async () => {
+      // const worker: Worker = new ComputeWorker();
+      // worker.postMessage("开启线程");
+      // worker.onmessage = (e) => {
+      //   console.log(e);
+      //   worker.terminate();
+      // };
+      await initData(
+        "/shader/test.vert.glsl",
+        "/shader/test.frag.glsl",
+        "/image/projection.png",
+        "/image/uv_100.png"
+      );
+
       initMap();
     });
   },
