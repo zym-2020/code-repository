@@ -1,7 +1,10 @@
 <template>
   <div class="body">
+    <div class="pic">
+      <img src="/xjpic.jpg" alt="" />
+    </div>
     <div class="name">张益铭</div>
-    <div style="text-align: center;">求职意向：前端工程师</div>
+    <div style="text-align: center">求职意向：软件研发</div>
     <el-divider content-position="left"
       ><span class="divider-text">个人信息</span></el-divider
     >
@@ -149,10 +152,11 @@ export default defineComponent({});
 <style lang="scss" scoped>
 .body {
   width: 800px;
-  
+
   margin: 20px auto;
   padding: 30px 20px;
   border: solid 2px #d4d4d4;
+  position: relative;
   .el-divider {
     margin-bottom: 15px;
     border-top-color: #8b8b8b;
@@ -163,6 +167,14 @@ export default defineComponent({});
   }
   ul {
     margin: 0px;
+  }
+  .pic {
+    position: absolute;
+    right: 100px;
+    height: 90px;
+    img {
+      height: 100%;
+    }
   }
   .name {
     font-size: 40px;
