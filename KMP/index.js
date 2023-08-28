@@ -28,3 +28,4 @@ const KMP = (s1, s2) => {
   else return true;
 };
 console.log(KMP("abcdabe", "abf"));
+
