@@ -4,7 +4,7 @@
       <img src="/xjpic.jpg" alt="" />
     </div>
     <div class="name">张益铭</div>
-    <div style="text-align: center">求职意向：软件研发</div>
+    <div style="text-align: center">求职意向：前端工程师</div>
     <el-divider content-position="left"
       ><span class="divider-text">个人信息</span></el-divider
     >
