@@ -6,12 +6,11 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import { GlHandle } from "@/utils/glUtil";
+import { GlHandle, m4 } from "@/utils/glUtil";
 import axios from "axios";
-import { Mat4 } from "@/utils/m4z";
+
 export default defineComponent({
   setup() {
-    const m4 = Mat4();
     const canvas = ref<HTMLCanvasElement>();
     let gl: WebGL2RenderingContext;
     let glHandle: GlHandle;
@@ -135,8 +134,9 @@ export default defineComponent({
       return (d * Math.PI) / 180;
     };
     let fieldOfViewRadians = degToRad(60);
-    let translation = [0, 0, -360];
-    let rotation = [degToRad(190), degToRad(40), degToRad(320)];
+    let translation: number[] = [-150, -50, -360];
+    const rotationValue = [190, 40, 30];
+
     let scale = [1, 1, 1];
     let rotationSpeed = 1.2;
 
@@ -196,6 +196,12 @@ export default defineComponent({
       const zNear = 1;
       const zFar = 2000;
       let matrix = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
+      let rotation = [
+        degToRad(rotationValue[0]),
+        degToRad(rotationValue[1]),
+        degToRad(rotationValue[2]),
+      ];
+
       matrix = m4.translate(
         matrix,
         translation[0],
@@ -206,12 +212,17 @@ export default defineComponent({
       matrix = m4.yRotate(matrix, rotation[1]);
       matrix = m4.zRotate(matrix, rotation[2]);
       matrix = m4.scale(matrix, scale[0], scale[1], scale[2]);
+
       gl.uniformMatrix4fv(
         glHandle.getUniformLocation("u_matrix"),
         false,
         matrix
       );
       gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
+      requestAnimationFrame(() => {
+        rotationValue[1] += rotationSpeed;
+        draw();
+      });
     };
 
     onMounted(async () => {
@@ -229,7 +240,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .canvas {
-  height: 500px;
-  width: 800px;
+  height: 300px;
+  width: 400px;
 }
 </style>

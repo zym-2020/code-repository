@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <div class="pic">
-      <img src="/xjpic.jpg" alt="" />
+      <!-- <img src="/xjpic.jpg" alt="" /> -->
     </div>
     <div class="name">张益铭</div>
     <div style="text-align: center">求职意向：前端工程师</div>
