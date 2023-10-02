@@ -5,5 +5,5 @@ declare module "*.vue" {
   export default component;
 }
 
-declare module "@/uitls/m4.js";
+// declare module "@/uitls/m4.js";
 declare module "@/uitls/m4z.js";

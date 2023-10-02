@@ -111,6 +111,10 @@ export class GlHandle {
     this.#map.set(id, texture);
   }
 
+  useTexture(id: string) {
+    this.#gl.bindTexture(this.#gl.TEXTURE_2D, this.#map.get(id));
+  }
+
   getUniformLocation = (name: string) => {
     return this.#gl.getUniformLocation(this.#program!, name);
   };

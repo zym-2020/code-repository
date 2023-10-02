@@ -1,4 +1,4 @@
-export function Mat4() {
+function Mat4() {
   "use strict";
 
   /**
@@ -1502,3 +1502,5 @@ export function Mat4() {
     setDefaultType: setDefaultType,
   };
 }
+
+export default Mat4();
