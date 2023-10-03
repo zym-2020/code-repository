@@ -6,7 +6,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import { GlHandle, m4 } from "@/utils/glUtil";
+import { GlHandle } from "@/utils/glUtil";
+import m4 from "@/utils/m4z";
 import axios from "axios";
 
 export default defineComponent({
