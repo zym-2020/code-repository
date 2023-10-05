@@ -64,6 +64,10 @@ export class GlHandle {
     this.#gl.useProgram(this.#program);
   }
 
+  getProgram() {
+    return this.#program
+  }
+
   bindVAO() {
     this.#gl.bindVertexArray(this.#VAO);
   }
@@ -93,6 +97,7 @@ export class GlHandle {
 
     this.#gl.enableVertexAttribArray(index);
     this.#gl.vertexAttribPointer(index, size, type, normalize, stride, offset);
+    return VBO
   }
 
   bindTexture(image: HTMLImageElement, index: number, id: string) {
