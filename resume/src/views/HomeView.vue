@@ -1,10 +1,10 @@
 <template>
   <div class="body">
     <div class="pic">
-      <!-- <img src="/xjpic.jpg" alt="" /> -->
+      <img src="/xjpic.jpg" alt="" />
     </div>
     <div class="name">张益铭</div>
-    <div style="text-align: center">求职意向：信息管理</div>
+    <!-- <div style="text-align: center">求职意向：测绘技术岗1</div> -->
     <el-divider content-position="left"
       ><span class="divider-text">个人信息</span></el-divider
     >
@@ -56,10 +56,10 @@
           <div class="project-name">
             <strong>长江南京以下野外观测数据平台</strong>（全栈开发 2022.05——）
           </div>
-          <div>在线地址：http://39.101.65.98:8080/</div>
+          <!-- <div>在线地址：http://39.101.65.98:8080/</div>
           <div class="tips">
             (部署在个人阿里云服务器上，配置低，初次访问资源加载过慢)
-          </div>
+          </div> -->
           <div style="height: 30px; line-height: 30px">
             github地址：https://github.com/zym-2020/Yangtze
           </div>

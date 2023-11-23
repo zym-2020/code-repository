@@ -16,9 +16,7 @@ export class GlHandle {
       const vertexShader = this.#gl.createShader(this.#gl.VERTEX_SHADER);
       this.#gl.shaderSource(vertexShader!, shader);
       this.#gl.compileShader(vertexShader!);
-      if (
-        !this.#gl.getShaderParameter(vertexShader!, this.#gl.COMPILE_STATUS)
-      ) {
+      if (!this.#gl.getShaderParameter(vertexShader!, this.#gl.COMPILE_STATUS)) {
         console.log(this.#gl.getShaderInfoLog(vertexShader!));
         throw new Error("compile shader error");
       }
@@ -29,10 +27,7 @@ export class GlHandle {
       const fragmentShader = this.#gl.createShader(this.#gl.FRAGMENT_SHADER);
       this.#gl.shaderSource(fragmentShader!, shader);
       this.#gl.compileShader(fragmentShader!);
-      if (
-        !this.#gl.getShaderParameter(fragmentShader!, this.#gl.COMPILE_STATUS)
-      )
-        throw new Error("compile shader error");
+      if (!this.#gl.getShaderParameter(fragmentShader!, this.#gl.COMPILE_STATUS)) throw new Error("compile shader error");
       this.#fragmentShader = fragmentShader;
     }
   }
@@ -42,11 +37,7 @@ export class GlHandle {
     if (this.#vertextShader && this.#fragmentShader && this.#program) {
       this.#gl.attachShader(this.#program, this.#vertextShader);
       this.#gl.attachShader(this.#program, this.#fragmentShader);
-      this.#gl.transformFeedbackVaryings(
-        this.#program,
-        outVaryings,
-        this.#gl.SEPARATE_ATTRIBS
-      );
+      this.#gl.transformFeedbackVaryings(this.#program, outVaryings, this.#gl.SEPARATE_ATTRIBS);
       this.#gl.linkProgram(this.#program);
     } else throw new Error("create feedback error");
   }
@@ -65,7 +56,7 @@ export class GlHandle {
   }
 
   getProgram() {
-    return this.#program
+    return this.#program;
   }
 
   bindVAO() {
@@ -76,62 +67,28 @@ export class GlHandle {
     this.#gl.bindVertexArray(null);
   }
 
-  bindVBO(
-    bufferType: number,
-    usage: number,
-    value: ArrayBuffer | number,
-    index: number,
-    size: number,
-    type: number,
-    normalize: boolean,
-    stride: number,
-    offset: number
-  ) {
+  bindVBO(bufferType: number, usage: number, value: ArrayBuffer | number, index: number, size: number, type: number, normalize: boolean, stride: number, offset: number) {
     const VBO = this.#gl.createBuffer();
     this.#VBOList.push(VBO!);
     this.bindVAO();
     this.#gl.bindBuffer(bufferType, VBO);
-    if (typeof value === "number")
-      this.#gl.bufferData(bufferType, value, usage);
+    if (typeof value === "number") this.#gl.bufferData(bufferType, value, usage);
     else this.#gl.bufferData(bufferType, value, usage);
 
     this.#gl.enableVertexAttribArray(index);
     this.#gl.vertexAttribPointer(index, size, type, normalize, stride, offset);
-    return VBO
+    return VBO;
   }
 
-  bindTexture(image: HTMLImageElement, index: number, id: string) {
+  bindTexture(image: HTMLImageElement, id: string) {
     const texture = this.#gl.createTexture();
-    this.#gl.activeTexture(this.#gl.TEXTURE0 + index);
     this.#gl.bindTexture(this.#gl.TEXTURE_2D, texture);
-    this.#gl.texImage2D(
-      this.#gl.TEXTURE_2D,
-      0,
-      this.#gl.RGBA,
-      this.#gl.RGBA,
-      this.#gl.UNSIGNED_BYTE,
-      image
-    );
-    this.#gl.texParameteri(
-      this.#gl.TEXTURE_2D,
-      this.#gl.TEXTURE_WRAP_S,
-      this.#gl.CLAMP_TO_EDGE
-    );
-    this.#gl.texParameteri(
-      this.#gl.TEXTURE_2D,
-      this.#gl.TEXTURE_WRAP_T,
-      this.#gl.CLAMP_TO_EDGE
-    );
-    this.#gl.texParameteri(
-      this.#gl.TEXTURE_2D,
-      this.#gl.TEXTURE_MIN_FILTER,
-      this.#gl.LINEAR
-    );
-    this.#gl.texParameteri(
-      this.#gl.TEXTURE_2D,
-      this.#gl.TEXTURE_MAG_FILTER,
-      this.#gl.LINEAR
-    );
+    // this.#gl.pixelStorei(this.#gl.UNPACK_FLIP_Y_WEBGL, 0); 
+    this.#gl.texImage2D(this.#gl.TEXTURE_2D, 0, this.#gl.RGBA, this.#gl.RGBA, this.#gl.UNSIGNED_BYTE, image);
+    this.#gl.texParameteri(this.#gl.TEXTURE_2D, this.#gl.TEXTURE_WRAP_S, this.#gl.CLAMP_TO_EDGE);
+    this.#gl.texParameteri(this.#gl.TEXTURE_2D, this.#gl.TEXTURE_WRAP_T, this.#gl.CLAMP_TO_EDGE);
+    this.#gl.texParameteri(this.#gl.TEXTURE_2D, this.#gl.TEXTURE_MIN_FILTER, this.#gl.NEAREST);
+    this.#gl.texParameteri(this.#gl.TEXTURE_2D, this.#gl.TEXTURE_MAG_FILTER, this.#gl.NEAREST);
     this.#map.set(id, texture);
   }
 

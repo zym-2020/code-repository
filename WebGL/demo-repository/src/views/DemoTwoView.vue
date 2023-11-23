@@ -189,7 +189,7 @@ export default defineComponent({
       const image = new Image();
       image.src = "./png/f-texture.png";
       image.onload = () => {
-        glHandle.bindTexture(image, 0, "texture0");
+        glHandle.bindTexture(image, "texture0");
       };
     };
 

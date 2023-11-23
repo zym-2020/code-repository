@@ -33,7 +33,6 @@ export default defineComponent({
       });
 
       function _render_three_frame(scene: any, frustum: any, pass: any) {
-        console.log(scene, pass)
         // if (pass === "SCREEN") {
         //   const gl: WebGLRenderingContext = scene.context._gl;
 

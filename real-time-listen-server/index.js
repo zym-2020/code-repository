@@ -72,7 +72,7 @@ const execute = () => {
         if (err) throw err;
       });
       db.run(
-        `insert into device_a values('${id}', '${time}', X'${buffer.toString(
+        `insert into device values('${id}', '${time}', X'${buffer.toString(
           "hex"
         )}')`,
         (err) => {
