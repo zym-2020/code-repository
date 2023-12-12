@@ -8,7 +8,9 @@
     <router-link to="/demo5">demo5</router-link> |
     <router-link to="/demo6">demo6</router-link> |
     <router-link to="/demo7">demo7</router-link> |
-    <router-link to="/symbol">symbol</router-link>
+    <router-link to="/demo8">demo8</router-link> |
+    <router-link to="/symbol">symbol</router-link> 
+    
   </nav>
   <router-view />
 </template>
