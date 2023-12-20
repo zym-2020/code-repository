@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "@types/gl-matrix": "^3.2.0",
+    "@types/mapbox-gl": "^2.7.19",
     "axios": "^1.5.0",
     "core-js": "^3.8.3",
     "gl-matrix": "^3.4.3",
+    "mapbox-gl": "2.15",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },

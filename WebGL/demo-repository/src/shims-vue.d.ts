@@ -6,5 +6,5 @@ declare module "*.vue" {
 }
 
 // declare module "@/uitls/m4.js";
-declare module "@/uitls/m4z.js";
-declare module '*'
+declare module "@/utils/m4z.js";
+

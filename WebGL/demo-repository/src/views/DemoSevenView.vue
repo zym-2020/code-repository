@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import m4 from "@/utils/m4z";
+import m4 from "@/utils/m4z.js";
 import axios from "axios";
 export default defineComponent({
   setup() {
