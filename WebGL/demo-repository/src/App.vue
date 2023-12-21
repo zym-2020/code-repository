@@ -10,11 +10,25 @@
     <router-link to="/demo7">demo7</router-link> |
     <router-link to="/demo8">demo8</router-link> |
     <router-link to="/demo9">demo9</router-link> |
+    <router-link to="/demo10">demo10</router-link> |
+    <router-link to="/demo11">demo11</router-link> |
     <router-link to="/symbol">symbol</router-link> 
     
   </nav>
   <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent, onMounted } from 'vue'
+export default defineComponent({
+  setup() {
+    onMounted(() => {
+      console.log(Math.cos(Math.PI))
+    })
+  }
+})
+</script>
+
 
 <style lang="scss">
 html,

@@ -78,7 +78,7 @@ export default defineComponent({
                   const positionX = encodeFloatToDouble(coord.x);
                   const positionY = encodeFloatToDouble(coord.y);
                   this.position.push(positionX[0], positionY[0], positionX[1], positionY[1]);
-                  this.rotationArray.push(0);
+                  this.rotationArray.push(0 / 180 * Math.PI);
                 }
               }
             }
@@ -212,13 +212,13 @@ export default defineComponent({
       }
     }
 
-    const symbolHandle = new SymbolHandle(64, 25);
+    const symbolHandle = new SymbolHandle(64, 32);
     const initResource = async () => {
       await symbolHandle.getShader("/shader/demo9.vert.glsl", "vertex");
       await symbolHandle.getShader("/shader/demo9.frag.glsl", "fragment");
       await symbolHandle.getTexture("/png/strip.png", "strip");
       await symbolHandle.getTexture("/png/palette.png", "palette");
-      await symbolHandle.getData("/json/crossroad_NJ.geojson", "/json/tbvs.json", "campfire");
+      await symbolHandle.getData("/json/crossroad_NJ.geojson", "/json/tbvs.json", "sidewalk_kai");
     };
     const initMap = () => {
       const mapOpt: MapboxOptions & { useWebGL2: boolean } = {

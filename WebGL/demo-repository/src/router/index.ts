@@ -53,7 +53,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/demo9",
     name: "demo9",
-    component: () => import("@/views/DemoNineView.vue")
+    component: () => import("@/views/DemoNineView.vue"),
+  },
+  {
+    path: "/demo10",
+    name: "demo10",
+    component: () => import("@/views/DemoTenView.vue"),
+  },
+  {
+    path: "/demo11",
+    name: "demo11",
+    component: () => import("@/views/DemoElevenView.vue"),
   },
   {
     path: "/symbol",
