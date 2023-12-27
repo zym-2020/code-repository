@@ -22,9 +22,7 @@
 import { defineComponent, onMounted } from 'vue'
 export default defineComponent({
   setup() {
-    onMounted(() => {
-      console.log(Math.cos(Math.PI))
-    })
+    
   }
 })
 </script>
