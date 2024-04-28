@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wind</title>
+    <script src="./lib/mapbox-gl.js"></script>
+    <link href="./lib/mapbox-gl.css" rel="stylesheet" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="module">
+      import { initWebGL, Wind } from "./index.js";
+      mapboxgl.accessToken = "pk.eyJ1Ijoiam9obm55dCIsImEiOiJja2xxNXplNjYwNnhzMm5uYTJtdHVlbTByIn0.f1GfZbFLWjiEayI6hb_Qvg";
+      const wind = new Wind({
+        seeding: [
+          "/flow/texture/2016112000_mask.png",
+          "/flow/texture/2016112006_mask.png",
+          "/flow/texture/2016112012_mask.png",
+          "/flow/texture/2016112018_mask.png",
+          "/flow/texture/2016112100_mask.png",
+          "/flow/texture/2016112106_mask.png",
+          "/flow/texture/2016112112_mask.png",
+          "/flow/texture/2016112118_mask.png",
+          "/flow/texture/2016112200_mask.png",
+        ],
+        constraints: {
+          minSpeedFactor: 0.5,
+          minTrajectoryNum: 4096,
+          minSegmentNum: 3,
+          minFillWidth: 1,
+          minAAWidth: 1,
+          minFixedDropRate: 0.001,
+          minExtraDropRate: 0.001,
+          maxSpeedFactor: 10,
+          maxTrajectoryNum: 262144,
+          maxSegmentNum: 16,
+          maxFillWidth: 25,
+          maxAAWidth: 5,
+          maxFixedDropRate: 0.1,
+          maxExtraDropRate: 0.2,
+
+          maxTextureSize: 4096,
+        },
+        parameter: {
+          speedFactor: 0.05,
+          tracksNumber: 65536,
+          segmentNumber: 16,
+          fillWidth: 1,
+          aaWidth: 2,
+          color: 1,
+          primitive: 0,
+          fixedDropRate: 0.003,
+          extraDropRate: 0.002,
+        },
+        extent: [0.8334519409367115, 0.4087464036632672, 0.8388303296774701, 0.40586521884815613],
+        flowBoundary: {
+          uMax: 26.8,
+          uMin: -21.32,
+          vMax: 21.42,
+          vMin: -21.57,
+        },
+        flowFields: [
+          "/flow/texture/2016112000.png",
+          "/flow/texture/2016112006.png",
+          "/flow/texture/2016112012.png",
+          "/flow/texture/2016112018.png",
+          "/flow/texture/2016112100.png",
+          "/flow/texture/2016112106.png",
+          "/flow/texture/2016112112.png",
+          "/flow/texture/2016112118.png",
+          "/flow/texture/2016112200.png",
+        ],
+        projection: "/flow/texture/projection_mapbox.png",
+        textureSize: {
+          seeding: [360, 180],
+          flowField: [360, 180],
+          projection: [1024, 2048],
+        },
+        frequency: 1000,
+      });
+      var map = (window.map = new mapboxgl.Map({
+        container: "map",
+        zoom: 2,
+        center: [121, 31],
+        // pitch: 45,
+        style: "mapbox://styles/johnnyt/clblx2t3v000a14proaq4e9qv",
+        // style: {
+        //   version: 8,
+        //   sources: {
+        //     tdtVec: {
+        //       type: "raster",
+        //       tiles: [
+        //         "http://t0.tianditu.com/vec_w/wmts?tk=35a94ab5985969d0b93229c30db6abd6&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=tiles",
+        //       ],
+        //       tileSize: 256,
+        //     },
+        //     txt: {
+        //       type: "raster",
+        //       tiles: [
+        //         "http://t0.tianditu.com/cva_w/wmts?tk=35a94ab5985969d0b93229c30db6abd6&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=w&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=tiles",
+        //       ],
+        //       tileSize: 256,
+        //     },
+        //   },
+        //   layers: [
+        //     {
+        //       id: "background",
+        //       type: "background",
+        //       paint: {
+        //         "background-color": "black",
+        //       },
+        //     },
+        //     // {
+        //     //   id: "tdtVec",
+        //     //   type: "raster",
+        //     //   source: "tdtVec",
+        //     // },
+        //     // {
+        //     //   id: "txt",
+        //     //   type: "raster",
+        //     //   source: "txt",
+        //     // },
+        //   ],
+        // },
+        renderWorldCopies: true,
+        useWebGL2: true,
+        antialias: true, // create the gl context with MSAA antialiasing, so custom layers are antialiased
+      }));
+      map.on("load", async () => {
+        const layer = await wind.generateCustomLayer("wind");
+        map.addLayer(layer);
+      });
+    </script>
+  </body>
+</html>

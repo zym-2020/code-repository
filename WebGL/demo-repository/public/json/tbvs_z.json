@@ -1,0 +1,53 @@
+{
+    "markers": {
+        "count": 6,
+        "description": [
+            {
+                "ID": 0,
+                "base": 0,
+                "length": 65,
+                "name": "ship1"
+            },
+            {
+                "ID": 1,
+                "base": 65,
+                "length": 333,
+                "name": "ship2"
+            },
+            {
+                "ID": 2,
+                "base": 398,
+                "length": 729,
+                "name": "ship2"
+            },
+            {
+                "ID": 3,
+                "base": 1127,
+                "length": 128,
+                "name": "crossroad"
+            },
+            {
+                "ID": 4,
+                "base": 1255,
+                "length": 845,
+                "name": "ship3"
+            },
+            {
+                "ID": 5,
+                "base": 2100,
+                "length": 152,
+                "name": "ship4"
+            }
+        ]
+    },
+    "palette_texture": {
+        "height": 12,
+        "name": "palette.png",
+        "width": 16
+    },
+    "strip_texture": {
+        "height": 64,
+        "name": "strip.png",
+        "width": 64
+    }
+}

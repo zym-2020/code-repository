@@ -1,0 +1,15 @@
+{
+    "markers": {
+        "count": 6,
+        "description": [
+            {
+                "baseColor": 0,
+                "baseVertex": 0,
+                "length": 914,
+                "name": "no_truck_access"
+            }
+        ]
+    },
+    "palette_texture": { "height": 1, "name": "palette.png", "width": 16 },
+    "strip_texture": { "height": 64, "name": "strip.png", "width": 64 }
+}

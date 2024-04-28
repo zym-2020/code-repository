@@ -23,30 +23,37 @@ export default defineComponent({
       };
       map = new mapBoxGl.Map(mapOpt);
       map.on("load", async () => {
-        const res = await axios.get("/json/crossroad_NJ.geojson").then((res) => res.data);
-        map.loadImage("/png/walker.png", (error, image) => {
-          if (error) throw error;
-          map.addImage("walker", image!);
-
+        const res = await axios.get("/json/points.geojson").then((res) => res.data);
+        const promiseArr = [];
+        for (let i = 1; i < 1027; i++) {
+          const promise = new Promise((res) => {
+            map.loadImage(`/pngs/${i}.png`, (error, image) => {
+              if (error) throw error;
+              map.addImage(`${i}`, image!);
+              res(null)
+            });
+          });
+          promiseArr.push(promise);
+        }
+        Promise.all(promiseArr).then((result) => {
           map.addSource("point", {
             type: "geojson",
             data: res,
-            
           });
           map.addLayer({
             id: "points",
             type: "symbol",
             source: "point",
             layout: {
-              "icon-image": "walker",
-              "icon-size": 0.15,
-            //   "icon-allow-overlap": true,
+              "icon-image": ["get", "icon"],
+              "icon-size": 2,
+              //   "icon-allow-overlap": true,
               "icon-ignore-placement": true,
               "icon-rotate": 0,
-              
             },
           });
         });
+        
       });
     };
     onMounted(() => {
@@ -60,6 +67,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container {
-  height: 800px;
+  height: 1000px;
 }
 </style>

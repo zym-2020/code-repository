@@ -1,5 +1,5 @@
 <template>
-  <canvas ref="container" width="400" height="300"></canvas>
+  <canvas ref="container" width="400" height="400"></canvas>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,20 @@ export default defineComponent({
     let gl: WebGL2RenderingContext;
     let glHandle: GlHandle;
 
-    const sampleArray = [914, 618, 0, 1, 914, 618, 1, 1, 914, 618, 2, 1, 914, 618, 3, 1, 914, 618, 4, 1, 914, 618, 5, 1, 914, 618, 6, 1, 914, 618, 7, 1, 914, 618, 8, 1, 914, 618, 9, 1];
+    const sampleArray = [
+      2803, 254, 0, 5,
+      2803, 254, 1, 5,
+      2803, 254, 2, 5,
+      2803, 254, 3, 5,
+      2803, 254, 4, 5,
+      2803, 254, 5, 5,
+      2803, 254, 6, 5,
+      2803, 254, 7, 5,
+      2803, 254, 8, 5,
+      2803, 254, 9, 5,
+      
+      
+    ];
 
     const initWebGL = () => {
       gl = container.value?.getContext("webgl2")!;
@@ -59,7 +72,7 @@ export default defineComponent({
 
     const draw = () => {
       console.log(3);
-      gl.clearColor(0, 0, 0, 1.0);
+      gl.clearColor(0, 0, 0, 0.0);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       // gl.enable(gl.DEPTH_TEST);
       // gl.enable(gl.CULL_FACE);
@@ -74,7 +87,7 @@ export default defineComponent({
       glHandle.useTexture("texture1");
       gl.uniform1i(paletteTextureLoc, 1);
 
-      gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 64, 10);
+      gl.drawArraysInstanced(gl.LINE_STRIP, 0, 64, 10);
 
       // requestAnimationFrame(draw);
     };

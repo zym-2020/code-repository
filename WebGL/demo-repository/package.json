@@ -7,12 +7,15 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@sakitam-gis/mapbox-wind": "^2.0.0",
     "@types/gl-matrix": "^3.2.0",
     "@types/mapbox-gl": "^2.7.19",
     "axios": "^1.5.0",
+    "cesium": "1.111",
     "core-js": "^3.8.3",
     "gl-matrix": "^3.4.3",
     "mapbox-gl": "2.15",
+    "ol": "8.1",
     "stats.js": "^0.17.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
