@@ -1,26 +1,23 @@
-import matplotlib.pyplot as plt
-import numpy as np
+import PyPDF2
 
-# 生成符号的顶点数量数据（随机生成示例数据）
-np.random.seed(42)
-vertex_counts = np.random.randint(1, 1000, size=509193)
+import os
 
-# 设置直方图的边界和区间数量
-bin_edges = np.linspace(0, 1000, 51)  # 设置边界为0到1000，分为50个区间
+folder_path = r"E:\QQ下载\1161384816\FileRecv\1715237835781308569"
 
-# 绘制直方图
-plt.hist(vertex_counts, bins=bin_edges, edgecolor='black')
+for root, dirs, files in os.walk(folder_path):
+    for file in files:
+        file_path = os.path.join(root, file)
+        with open(file_path, 'rb') as f:
+            # 创建一个PdfFileReader对象
+            pdf_reader = PyPDF2.PdfFileReader(f)
 
-# 设置x轴和y轴标签
-plt.xlabel('Vertex Count')
-plt.ylabel('Number of Symbols')
+            # 获取PDF文件的总页数
+            num_pages = pdf_reader.numPages
+            page = pdf_reader.getPage(2)
+            text = page.extract_text()
+            lines = text.split('\n')
+            line_content = lines[14][4:6]
+            print(file[0:9],line_content)
 
-# 设置x轴和y轴的范围
-plt.xlim(0, 1000)
-plt.ylim(0, 55000)
 
-# 绘制95%范围内的区域
-plt.axvspan(50, 500, alpha=0.3, color='gray')
 
-# 显示图形
-plt.show()

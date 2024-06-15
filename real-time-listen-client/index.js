@@ -56,7 +56,7 @@ const execute = (host, port) => {
   }
 
   client = conn(host, port);
-  schedule.scheduleJob("0 26 * * * *", () => {
+  schedule.scheduleJob("0 11 * * * *", () => {
     if (!flag) {
       client = conn(host, port);
     }
